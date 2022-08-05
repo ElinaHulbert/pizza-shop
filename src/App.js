@@ -21,7 +21,9 @@ function App() {
               <PizzaBlock
                 title={obj.title}
                 price={obj.price}
-                image={obj.imageUrl}
+                imageUrl={obj.imageUrl}
+                sizes={obj.sizes}
+                types={obj.types}
               />
             ))}
           </div>

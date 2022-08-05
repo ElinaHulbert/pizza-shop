@@ -1,23 +1,44 @@
 import React from "react";
-function PizzaBlock({ title, price, image }) {
+function PizzaBlock({ title, price, imageUrl, sizes, types }) {
   // const [pizzaCount, setPizzaCount] = React.useState(0);
   // const onClickAdd = () => {
   //   setPizzaCount(pizzaCount + 1);
   // };
   // temporary counter, it will be done in redux later
+  const [activeType, setActiveType] = React.useState(0);
+
+  const [activeSize, setActiveSize] = React.useState(0);
+
+  const typeNames = ["thin", "traditional"];
   return (
     <div className="pizza-block">
-      <img className="pizza-block__image" src={image} alt="Pizza" />
+      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
-          <li className="active">тонкое</li>
-          <li>традиционное</li>
+          {/* the way I did */}
+          {/* {types.map((type) => (
+            <li>{type === 0 ? "thin" : "traditional"}</li>
+          ))} */}
+          {/* the other way I can use */}
+          {types.map((typeId) => (
+            <li
+              onClick={() => setActiveType(typeId)}
+              className={activeType === typeId ? "active" : ""}
+            >
+              {typeNames[typeId]}
+            </li>
+          ))}
         </ul>
         <ul>
-          <li className="active">26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {sizes.map((size, i) => (
+            <li
+              onClick={() => setActiveSize(i)}
+              className={activeSize === i ? "active" : ""}
+            >
+              {size}
+            </li>
+          ))}
         </ul>
       </div>
       <div className="pizza-block__bottom">
