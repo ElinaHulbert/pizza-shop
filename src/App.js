@@ -18,13 +18,13 @@ function App() {
           <h2 className="content__title">All products</h2>
           <div className="content__items">
             {pizzas.map((obj) => (
-              <PizzaBlock
-                title={obj.title}
-                price={obj.price}
-                imageUrl={obj.imageUrl}
-                sizes={obj.sizes}
-                types={obj.types}
-              />
+              <PizzaBlock {...obj} />
+              // spread operator, sending the whole object instead of this:
+              // title={obj.title}
+              // price={obj.price}
+              // imageUrl={obj.imageUrl}
+              // sizes={obj.sizes}
+              // types={obj.types}
             ))}
           </div>
         </div>
