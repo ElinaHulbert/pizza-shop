@@ -18,7 +18,7 @@ function App() {
           <h2 className="content__title">All products</h2>
           <div className="content__items">
             {pizzas.map((obj) => (
-              <PizzaBlock {...obj} />
+              <PizzaBlock {...obj} key={obj.id} />
               // spread operator, sending the whole object instead of this:
               // title={obj.title}
               // price={obj.price}
