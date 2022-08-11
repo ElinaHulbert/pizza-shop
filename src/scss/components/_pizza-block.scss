@@ -4,13 +4,18 @@
   width: 280px;
   text-align: center;
   margin-bottom: 65px;
+  
 
+  
   // &:not(:nth-of-type(4n)) {
   //   margin-right: 35px;
   // }
 
   &__image {
     width: 260px;
+    // @media (max-width: 380px){
+    //   max-width: 240px;
+    // }
   }
 
   &__title {
@@ -18,6 +23,9 @@
     font-weight: 900;
     letter-spacing: 1%;
     margin-bottom: 20px;
+    // @media (max-width: 380px){
+    //   font-size: 16px;
+    // }
   }
 
   &__selector {
@@ -26,6 +34,9 @@
     border-radius: 10px;
     flex-direction: column;
     padding: 6px;
+    @media (max-width: 380px){
+      max-width: 240px;
+    }
 
     ul {
       display: flex;
