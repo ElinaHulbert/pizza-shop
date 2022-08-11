@@ -7,20 +7,29 @@ import Categories from "../components/Categories";
 export default function Home() {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [categoryId, setCategoryId] = React.useState(0);
+  const [sortType, setSortType] = React.useState(0);
+
   React.useEffect(() => {
-    fetch("https://62f0eef1e2bca93cd240319f.mockapi.io/items")
+    setIsLoading(true);
+    fetch(
+      "https://62f0eef1e2bca93cd240319f.mockapi.io/items?category=" + categoryId
+    )
       .then((res) => res.json())
       .then((arr) => {
         setItems(arr);
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, []);
+  }, [categoryId, sortType]);
   return (
     <div className="container">
       <div className="content__top">
-        <Categories />
-        <Sort />
+        <Categories
+          categoryId={categoryId}
+          onChangeCategory={(id) => setCategoryId(id)}
+        />
+        <Sort sortType={sortType} onChangeSort={(id) => setSortType(id)} />
       </div>
       <h2 className="content__title">All products</h2>
       <div className="content__items">
