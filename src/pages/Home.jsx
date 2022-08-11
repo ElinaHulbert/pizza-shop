@@ -14,9 +14,10 @@ export default function Home() {
         setItems(arr);
         setIsLoading(false);
       });
+    window.scrollTo(0, 0);
   }, []);
   return (
-    <>
+    <div className="container">
       <div className="content__top">
         <Categories />
         <Sort />
@@ -35,6 +36,6 @@ export default function Home() {
               // types={obj.types}
             ))}
       </div>
-    </>
+    </div>
   );
 }
