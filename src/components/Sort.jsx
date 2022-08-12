@@ -10,8 +10,8 @@ function Sort({ sortType, onChangeSort }) {
     { name: "popularity(asc)", sortProperty: "-rating" },
     { name: "price(desc)", sortProperty: "price" },
     { name: "price(asc)", sortProperty: "-price" },
-    { name: "A-Z(desc)", sortProperty: "title" },
-    { name: "A-Z(asc)", sortProperty: "-title" },
+    { name: "A-Z", sortProperty: "title" },
+    { name: "Z-A", sortProperty: "-title" },
   ];
 
   const onClickListItem = (i) => {

@@ -4,7 +4,7 @@ import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Categories from "../components/Categories";
 
-export default function Home() {
+export default function Home({ searchValue }) {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoryId, setCategoryId] = React.useState(0);
@@ -17,10 +17,11 @@ export default function Home() {
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const sortBy = sortType.sortProperty.replace("-", "");
     const order = sortType.sortProperty.includes("-") ? "asc" : "desc";
+    const search = searchValue ? `&search=${searchValue}` : "";
 
     setIsLoading(true);
     fetch(
-      `https://62f0eef1e2bca93cd240319f.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}`
+      `https://62f0eef1e2bca93cd240319f.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}${search}`
     )
       .then((res) => res.json())
       .then((arr) => {
@@ -28,8 +29,28 @@ export default function Home() {
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [categoryId, sortType]);
-  console.log(categoryId, sortType, " id&type");
+  }, [categoryId, sortType, searchValue]);
+  const skeletons = [...new Array(6)].map((_, index) => (
+    <Skeleton key={index} />
+  ));
+  const pizzas = items
+    // this filtration method is good for static pages
+    // .filter((obj) => {
+    //   if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
+    //     return true;
+    //   }
+    //   return false;
+    // })
+
+    .map((obj) => (
+      <PizzaBlock {...obj} key={obj.id} />
+      // spread operator, sending the whole object instead of this:
+      // title={obj.title}
+      // price={obj.price}
+      // imageUrl={obj.imageUrl}
+      // sizes={obj.sizes}
+      // types={obj.types}
+    ));
   return (
     <div className="container">
       <div className="content__top">
@@ -40,19 +61,7 @@ export default function Home() {
         <Sort sortType={sortType} onChangeSort={(id) => setSortType(id)} />
       </div>
       <h2 className="content__title">All products</h2>
-      <div className="content__items">
-        {isLoading
-          ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-          : items.map((obj) => (
-              <PizzaBlock {...obj} key={obj.id} />
-              // spread operator, sending the whole object instead of this:
-              // title={obj.title}
-              // price={obj.price}
-              // imageUrl={obj.imageUrl}
-              // sizes={obj.sizes}
-              // types={obj.types}
-            ))}
-      </div>
+      <div className="content__items">{isLoading ? skeletons : pizzas}</div>
     </div>
   );
 }
