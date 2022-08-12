@@ -3,16 +3,22 @@ import React from "react";
 function Sort({ sortType, onChangeSort }) {
   const [open, setOpen] = React.useState(false);
   const list = [
-    { name: "popularity", sort: "rating" },
-    { name: "price", sort: "rating" },
-    { name: "A-Z", sort: "rating" },
+    {
+      name: "popularity(desc)",
+      sortProperty: "rating",
+    },
+    { name: "popularity(asc)", sortProperty: "-rating" },
+    { name: "price(desc)", sortProperty: "price" },
+    { name: "price(asc)", sortProperty: "-price" },
+    { name: "A-Z(desc)", sortProperty: "title" },
+    { name: "A-Z(asc)", sortProperty: "-title" },
   ];
 
   const onClickListItem = (i) => {
     onChangeSort(i);
     setOpen(false);
   };
-  const sortName = list[sortType].name;
+
   return (
     <div className="sort">
       <div className="sort__label">
@@ -29,7 +35,7 @@ function Sort({ sortType, onChangeSort }) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open)}>{sortName}</span>
+        <span onClick={() => setOpen(!open)}>{sortType.name}</span>
       </div>
       {open && (
         <div className="sort__popup">
@@ -37,8 +43,10 @@ function Sort({ sortType, onChangeSort }) {
             {list.map((list, i) => (
               <li
                 key={i}
-                onClick={() => onClickListItem(i)}
-                className={sortType === i ? "active" : ""}
+                onClick={() => onClickListItem(list)}
+                className={
+                  sortType.sortProperty === list.sortProperty ? "active" : ""
+                } //we compare something that parent has to something that is rendering right now in the list
               >
                 {list.name}
               </li>

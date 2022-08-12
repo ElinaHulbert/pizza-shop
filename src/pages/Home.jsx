@@ -8,12 +8,19 @@ export default function Home() {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoryId, setCategoryId] = React.useState(0);
-  const [sortType, setSortType] = React.useState(0);
+  const [sortType, setSortType] = React.useState({
+    name: "popularity",
+    sortProperty: "rating",
+  });
 
   React.useEffect(() => {
+    const category = categoryId > 0 ? `category=${categoryId}` : "";
+    const sortBy = sortType.sortProperty.replace("-", "");
+    const order = sortType.sortProperty.includes("-") ? "asc" : "desc";
+
     setIsLoading(true);
     fetch(
-      "https://62f0eef1e2bca93cd240319f.mockapi.io/items?category=" + categoryId
+      `https://62f0eef1e2bca93cd240319f.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}`
     )
       .then((res) => res.json())
       .then((arr) => {
@@ -22,6 +29,7 @@ export default function Home() {
       });
     window.scrollTo(0, 0);
   }, [categoryId, sortType]);
+  console.log(categoryId, sortType, " id&type");
   return (
     <div className="container">
       <div className="content__top">
