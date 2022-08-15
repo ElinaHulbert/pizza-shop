@@ -1,4 +1,5 @@
 import React from "react";
+import Pagination from "../pagination";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
@@ -62,6 +63,7 @@ export default function Home({ searchValue }) {
       </div>
       <h2 className="content__title">All products</h2>
       <div className="content__items">{isLoading ? skeletons : pizzas}</div>
+      <Pagination />
     </div>
   );
 }
