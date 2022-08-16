@@ -4,8 +4,9 @@ import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Categories from "../components/Categories";
+import { SearchContext } from "../App";
 
-export default function Home({ searchValue }) {
+export default function Home() {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoryId, setCategoryId] = React.useState(0);
@@ -14,6 +15,7 @@ export default function Home({ searchValue }) {
     name: "popularity",
     sortProperty: "rating",
   });
+  const { searchValue } = React.useContext(SearchContext);
 
   React.useEffect(() => {
     const category = categoryId > 0 ? `category=${categoryId}` : "";
