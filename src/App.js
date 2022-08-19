@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
+import { store } from "./redux/store";
 
 // import pizzas from "./assets/pizzas.json";
 import "./scss/app.scss";
