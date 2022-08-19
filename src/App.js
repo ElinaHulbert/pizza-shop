@@ -1,7 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+//useSelector takes out the data from storage, like useContext
 import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment } from "./redux/slices/filterSlice";
+import { decrement, increment } from "./redux/slices/filterSlice"; //destructuring since there is no default in original file
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";

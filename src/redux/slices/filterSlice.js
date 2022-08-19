@@ -1,18 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+//initial state as if in useState(0)
+//this object can have any amount and various properties
 const initialState = {
   value: 0,
 };
 
+//logic that handles the state
 export const filterSlice = createSlice({
-  name: "filter",
-  initialState,
+  //creating slice with this function which we take from redux toolkit library
+  name: "filter", //the name of our slice
+  initialState, //the initial state
   reducers: {
+    //actions that will change the state
     increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
       state.value += 1;
     },
     decrement: (state) => {
@@ -23,8 +24,8 @@ export const filterSlice = createSlice({
     },
   },
 });
-
-// Action creators are generated for each case reducer function
+//exporting methods to be able to use them in another components
+//filterSlice.actions will contain increment, decrement and incrementByAmount
 export const { increment, decrement, incrementByAmount } = filterSlice.actions;
-
+//reducer is responsible for the state change
 export default filterSlice.reducer;
