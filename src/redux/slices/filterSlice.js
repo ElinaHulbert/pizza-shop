@@ -1,31 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-//initial state as if in useState(0)
-//this object can have any amount and various properties
+import { createSlice } from "@reduxjs/toolkit"; //destructuring since there is no import default
 const initialState = {
-  value: 0,
+  categoryId: 55,
+  sort: {
+    name: "popularity",
+    sortProperty: "rating",
+  },
 };
 
-//logic that handles the state
-export const filterSlice = createSlice({
-  //creating slice with this function which we take from redux toolkit library
-  name: "filter", //the name of our slice
-  initialState, //the initial state
+const filterSlice = createSlice({
+  name: "filters",
+  initialState,
   reducers: {
-    //actions that will change the state
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
+    setCategoryId(state, action) {
+      console.log("action", action);
+      //can be created as an arrow function as well, but can be left as a method
+      state.categoryId = action.payload; //we will get the payload when dispatch setCategoryId and redux will set the payload to state
     },
   },
 });
-//exporting methods to be able to use them in another components
-//filterSlice.actions will contain increment, decrement and incrementByAmount
-export const { increment, decrement, incrementByAmount } = filterSlice.actions;
-//reducer is responsible for the state change
+console.log(filterSlice, "filterslice");
+
+export const { setCategoryId } = filterSlice.actions || {}; //get out actions for future dispatch
 export default filterSlice.reducer;

@@ -5,11 +5,17 @@ import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Categories from "../components/Categories";
 import { SearchContext } from "../App";
+import { useSelector, useDispatch } from "react-redux";
+import { setCategoryId } from "../redux/slices/filterSlice";
 
 export default function Home() {
+  const categoryId = useSelector((state) => state.filter.categoryId); //we don't need the whole state, just getting the part we want
+
+  const dispatch = useDispatch();
+
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [categoryId, setCategoryId] = React.useState(0);
+  // const [categoryId, setCategoryId] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [sortType, setSortType] = React.useState({
     name: "popularity",
@@ -17,6 +23,10 @@ export default function Home() {
   });
   const { searchValue } = React.useContext(SearchContext);
 
+  const onChangeCategory = (id) => {
+    console.log(id);
+    dispatch(setCategoryId(id));
+  };
   React.useEffect(() => {
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const sortBy = sortType.sortProperty.replace("-", "");
@@ -60,7 +70,7 @@ export default function Home() {
       <div className="content__top">
         <Categories
           categoryId={categoryId}
-          onChangeCategory={(id) => setCategoryId(id)}
+          onChangeCategory={onChangeCategory}
         />
         <Sort sortType={sortType} onChangeSort={(id) => setSortType(id)} />
       </div>
