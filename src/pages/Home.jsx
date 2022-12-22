@@ -1,3 +1,4 @@
+//Компания, где производят пирог. Компания принимает инструкции со склада и посылает ее на кухню.
 import React from "react";
 import Pagination from "../pagination";
 import Sort from "../components/Sort";
@@ -9,28 +10,28 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCategoryId } from "../redux/slices/filterSlice";
 
 export default function Home() {
-  const categoryId = useSelector((state) => state.filter.categoryId); //we don't need the whole state, just getting the part we want
-
+  const { categoryId, sort } = useSelector((state) => state.filter); //we don't need the whole state, just getting the part we want
+  const sortType = sort.sortProperty;
   const dispatch = useDispatch();
 
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   // const [categoryId, setCategoryId] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [sortType, setSortType] = React.useState({
-    name: "popularity",
-    sortProperty: "rating",
-  });
+  // const [sortType, setSortType] = React.useState({
+  //   name: "popularity",
+  //   sortProperty: "rating",
+  // });
   const { searchValue } = React.useContext(SearchContext);
 
   const onChangeCategory = (id) => {
     console.log(id);
-    dispatch(setCategoryId(id));
+    dispatch(setCategoryId(id)); //imported action above and dispatched it to store
   };
   React.useEffect(() => {
     const category = categoryId > 0 ? `category=${categoryId}` : "";
-    const sortBy = sortType.sortProperty.replace("-", "");
-    const order = sortType.sortProperty.includes("-") ? "asc" : "desc";
+    const sortBy = sortType.replace("-", "");
+    const order = sortType.includes("-") ? "asc" : "desc";
     const search = searchValue ? `&search=${searchValue}` : "";
 
     setIsLoading(true);
@@ -72,7 +73,7 @@ export default function Home() {
           categoryId={categoryId}
           onChangeCategory={onChangeCategory}
         />
-        <Sort sortType={sortType} onChangeSort={(id) => setSortType(id)} />
+        <Sort />
       </div>
       <h2 className="content__title">All products</h2>
       <div className="content__items">{isLoading ? skeletons : pizzas}</div>

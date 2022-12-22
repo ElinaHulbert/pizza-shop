@@ -1,6 +1,11 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setSort } from "../redux/slices/filterSlice";
 
-function Sort({ sortType, onChangeSort }) {
+function Sort() {
+  const dispatch = useDispatch();
+
+  const sort = useSelector((state) => state.filter.sort);
   const [open, setOpen] = React.useState(false);
   const list = [
     {
@@ -14,8 +19,9 @@ function Sort({ sortType, onChangeSort }) {
     { name: "Z-A", sortProperty: "-title" },
   ];
 
-  const onClickListItem = (i) => {
-    onChangeSort(i);
+  const onClickListItem = (obj) => {
+    // onChangeSort(i);
+    dispatch(setSort(obj));
     setOpen(false);
   };
 
@@ -35,7 +41,7 @@ function Sort({ sortType, onChangeSort }) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open)}>{sortType.name}</span>
+        <span onClick={() => setOpen(!open)}>{sort.name}</span>
       </div>
       {open && (
         <div className="sort__popup">
@@ -45,7 +51,7 @@ function Sort({ sortType, onChangeSort }) {
                 key={i}
                 onClick={() => onClickListItem(list)}
                 className={
-                  sortType.sortProperty === list.sortProperty ? "active" : ""
+                  sort.sortProperty === list.sortProperty ? "active" : ""
                 } //we compare something that parent has to something that is rendering right now in the list
               >
                 {list.name}
