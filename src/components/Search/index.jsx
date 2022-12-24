@@ -1,8 +1,35 @@
 import React from "react";
 import styles from "./search.module.scss";
 import { SearchContext } from "../../App";
+import debounce from "lodash.debounce";
+
+// const testDebounce = debounce(() => {
+//   console.log("hiiii");
+// }, 1000);
+//placing this function global because there will be re-render caused in the search component and this variable will be recreated
+
 function Search() {
-  const { searchValue, setSearchValue } = React.useContext(SearchContext);
+  const [value, setValue] = React.useState("");
+  const { setSearchValue } = React.useContext(SearchContext);
+  const inputRef = React.useRef();
+
+  const onClickClear = () => {
+    setSearchValue("");
+    setValue("");
+    inputRef.current.focus();
+  };
+
+  const updateSearchValue = React.useCallback(
+    debounce((str) => {
+      setSearchValue(str);
+    }, 250),
+    []
+  );
+
+  const onChangeInput = (event) => {
+    setValue(event.target.value);
+    updateSearchValue(event.target.value);
+  };
   return (
     <div className={styles.root}>
       <svg
@@ -40,15 +67,16 @@ function Search() {
         />
       </svg>
       <input
-        value={searchValue} //React advises to keep the changed value in input. Due to this, we can clear input "controlled input"
-        onChange={(event) => setSearchValue(event.target.value)}
+        ref={inputRef}
+        value={value} //React advises to keep the changed value in input. Due to this, we can clear input "controlled input"
+        onChange={onChangeInput}
         className={styles.input}
         placeholder="Search"
       />
-      {searchValue && (
+      {value && (
         <svg
           onClick={() => {
-            setSearchValue("");
+            onClickClear();
           }}
           className={styles.clear_icon}
           version="1.1"

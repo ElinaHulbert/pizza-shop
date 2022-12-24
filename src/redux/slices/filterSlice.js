@@ -1,7 +1,8 @@
 //склад для производства кусочка пирога и его начинки вместе с инструкциями.
 import { createSlice } from "@reduxjs/toolkit"; //destructuring since there is no import default
 const initialState = {
-  categoryId: 55,
+  categoryId: 0,
+  pageCount: 1,
   sort: {
     name: "popularity",
     sortProperty: "rating",
@@ -19,9 +20,13 @@ const filterSlice = createSlice({
     setSort(state, action) {
       state.sort = action.payload;
     },
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload;
+    },
   },
 }); //created action in filterSlice slice reducer and exported it below
 console.log(filterSlice, "filterslice");
 
 export default filterSlice.reducer;
-export const { setCategoryId, setSort } = filterSlice.actions || {}; //get out actions for future dispatch
+export const { setCategoryId, setSort, setCurrentPage } =
+  filterSlice.actions || {}; //get out actions for future dispatch
