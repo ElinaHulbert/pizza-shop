@@ -30,7 +30,6 @@ const filterSlice = createSlice({
     },
   },
 }); //created action in filterSlice slice reducer and exported it below
-console.log(filterSlice, "filterslice");
 
 export default filterSlice.reducer;
 export const { setCategoryId, setSort, setCurrentPage, setFilters } =

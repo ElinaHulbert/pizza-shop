@@ -45,7 +45,6 @@ export default function Home() {
     const sortBy = sortType.replace("-", "");
     const order = sortType.includes("-") ? "asc" : "desc";
     const search = searchValue ? `&search=${searchValue}` : "";
-    console.log("currentPage", currentPage);
 
     if (currentPage === undefined || isNaN(currentPage)) {
       axios
