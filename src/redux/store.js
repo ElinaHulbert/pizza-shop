@@ -5,6 +5,5 @@ import cart from "./slices/cartSlice";
 
 //creating a store
 export const store = configureStore({
-  reducer: { filter },
-  cart,
+  reducer: { filter, cart },
 });

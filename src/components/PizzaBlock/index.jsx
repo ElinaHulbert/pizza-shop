@@ -1,15 +1,29 @@
 import React from "react";
-function PizzaBlock({ title, price, imageUrl, sizes, types }) {
+import { useSelector, useDispatch } from "react-redux";
+import { addItem } from "../../redux/slices/cartSlice";
+function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
   // const [pizzaCount, setPizzaCount] = React.useState(0);
   // const onClickAdd = () => {
   //   setPizzaCount(pizzaCount + 1);
   // };
   // temporary counter, it will be done in redux later
   const [activeType, setActiveType] = React.useState(0);
-
   const [activeSize, setActiveSize] = React.useState(0);
-
   const typeNames = ["thin", "traditional"];
+
+  const dispatch = useDispatch();
+
+  const onClickAdd = () => {
+    const item = {
+      id,
+      title,
+      price,
+      imageUrl,
+      type: activeType,
+      size: activeSize,
+    };
+    dispatch(addItem(item));
+  };
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
@@ -46,7 +60,7 @@ function PizzaBlock({ title, price, imageUrl, sizes, types }) {
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">{price}SEK</div>
         <button
-          // onClick={onClickAdd}
+          onClick={onClickAdd}
           className="button button--outline button--add"
         >
           <svg
