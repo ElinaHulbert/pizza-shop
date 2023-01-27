@@ -8,11 +8,20 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    // addItem(state, action) {
+    //   state.items.push(action.payload);
+    //
+    // },
     addItem(state, action) {
-      state.items.push(action.payload);
+      const findItem = state.items.find((obj) => obj.id === action.payload.id);
+      if (findItem) {
+        findItem.count++;
+      } else {
+        state.items.push({ ...action.payload, count: 1 }); //taking everything we are getting from the component and adding only one item to store at the end
+      }
       state.totalPrice = state.items.reduce((sum, obj) => {
-        return obj.price + sum;
-      });
+        return obj.price * obj.count + sum; //sum is the previous sum we had in cart
+      }, 0);
     },
     removeItem(state, action) {
       state.items = state.items.filter((obj) => obj.id !== action.payload);
