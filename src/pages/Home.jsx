@@ -40,30 +40,24 @@ export default function Home() {
     dispatch(setCurrentPage(number)); //imported action above and dispatched it to store
   };
 
-  const fetchData = () => {
+  const fetchData = async () => {
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const sortBy = sortType.replace("-", "");
     const order = sortType.includes("-") ? "asc" : "desc";
     const search = searchValue ? `&search=${searchValue}` : "";
 
     if (currentPage === undefined || isNaN(currentPage)) {
-      axios
-        .get(
-          `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=1&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
-        )
-        .then((res) => {
-          setItems(res.data);
-          setIsLoading(false);
-        });
+      const res = await axios.get(
+        `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=1&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
+      );
+      setItems(res.data);
+      setIsLoading(false);
     } else {
-      axios
-        .get(
-          `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
-        )
-        .then((res) => {
-          setItems(res.data);
-          setIsLoading(false);
-        });
+      const res = await axios.get(
+        `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
+      );
+      setItems(res.data);
+      setIsLoading(false);
     }
 
     setIsLoading(true);
