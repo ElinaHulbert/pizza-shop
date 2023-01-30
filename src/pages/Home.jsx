@@ -39,29 +39,31 @@ export default function Home() {
   const onChangePage = (number) => {
     dispatch(setCurrentPage(number)); //imported action above and dispatched it to store
   };
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const category = categoryId > 0 ? `category=${categoryId}` : "";
+      const sortBy = sortType.replace("-", "");
+      const order = sortType.includes("-") ? "asc" : "desc";
+      const search = searchValue ? `&search=${searchValue}` : "";
 
-  const fetchData = async () => {
-    const category = categoryId > 0 ? `category=${categoryId}` : "";
-    const sortBy = sortType.replace("-", "");
-    const order = sortType.includes("-") ? "asc" : "desc";
-    const search = searchValue ? `&search=${searchValue}` : "";
+      if (currentPage === undefined || isNaN(currentPage)) {
+        const res = await axios.get(
+          `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=1&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
+        );
+        setItems(res.data);
+        setIsLoading(false);
+      } else {
+        const res = await axios.get(
+          `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
+        );
+        setItems(res.data);
+        setIsLoading(false);
+      }
+      window.scrollTo(0, 0);
+    };
 
-    if (currentPage === undefined || isNaN(currentPage)) {
-      const res = await axios.get(
-        `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=1&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
-      );
-      setItems(res.data);
-      setIsLoading(false);
-    } else {
-      const res = await axios.get(
-        `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
-      );
-      setItems(res.data);
-      setIsLoading(false);
-    }
-
-    setIsLoading(true);
-  };
+    fetchData();
+  }, [categoryId, sortType, searchValue, currentPage]);
 
   React.useEffect(() => {
     if (isMounted.current) {
@@ -97,13 +99,12 @@ export default function Home() {
 
   //Fetch pizzas if there was a first render
 
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-    if (!isSearch.current) {
-      fetchData();
-    }
-    isSearch.current = false;
-  }, [categoryId, sortType, searchValue, currentPage]);
+  // React.useEffect(() => {
+  //   if (!isSearch.current) {
+  //     fetchData();
+  //   }
+  //   isSearch.current = false;
+  // }, [categoryId, sortType, searchValue, currentPage]);
 
   const skeletons = [...new Array(6)].map((_, index) => (
     <Skeleton key={index} />
