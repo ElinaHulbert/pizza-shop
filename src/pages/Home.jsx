@@ -47,11 +47,16 @@ export default function Home() {
       const search = searchValue ? `&search=${searchValue}` : "";
 
       if (currentPage === undefined || isNaN(currentPage)) {
-        const res = await axios.get(
-          `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=1&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
-        );
-        setItems(res.data);
-        setIsLoading(false);
+        try {
+          const res = await axios.get(
+            `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=1&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
+          );
+          setItems(res.data);
+        } catch (error) {
+          console.log("Error: ", error);
+        } finally {
+          setIsLoading(false);
+        }
       } else {
         const res = await axios.get(
           `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
