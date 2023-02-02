@@ -1,17 +1,22 @@
 //Компания, где производят пирог. Компания принимает инструкции со склада и посылает ее на кухню.
-import React from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
+
 import Pagination from "../pagination";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
-import Skeleton from "../components/PizzaBlock/Skeleton";
 import Categories from "../components/Categories";
+import Skeleton from "../components/PizzaBlock/Skeleton";
+
 import { SearchContext } from "../App";
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   setCategoryId,
   setCurrentPage,
   setFilters,
 } from "../redux/slices/filterSlice";
+import { setItems } from "../redux/slices/pizzasSlice";
+
 import axios from "axios";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
@@ -21,16 +26,16 @@ export default function Home() {
   const { categoryId, sort, currentPage } = useSelector(
     (state) => state.filter
   ); //we don't need the whole state, just getting the part we want
+  const items = useSelector((state) => state.pizza.items);
   const sortType = sort.sortProperty;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isSearch = React.useRef(false);
-  const isMounted = React.useRef(false);
+  const isSearch = useRef(false);
+  const isMounted = useRef(false);
 
-  const [items, setItems] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const { searchValue } = React.useContext(SearchContext);
+  const { searchValue } = useContext(SearchContext);
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id)); //imported action above and dispatched it to store
@@ -39,38 +44,36 @@ export default function Home() {
   const onChangePage = (number) => {
     dispatch(setCurrentPage(number)); //imported action above and dispatched it to store
   };
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       const category = categoryId > 0 ? `category=${categoryId}` : "";
       const sortBy = sortType.replace("-", "");
       const order = sortType.includes("-") ? "asc" : "desc";
       const search = searchValue ? `&search=${searchValue}` : "";
+      let url;
 
       if (currentPage === undefined || isNaN(currentPage)) {
-        try {
-          const res = await axios.get(
-            `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=1&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
-          );
-          setItems(res.data);
-        } catch (error) {
-          console.log("Error: ", error);
-        } finally {
-          setIsLoading(false);
-        }
+        url = `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=1&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`;
       } else {
-        const res = await axios.get(
-          `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
-        );
-        setItems(res.data);
+        url = `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`;
+      }
+
+      try {
+        const { data } = await axios.get(url);
+        dispatch(setItems(data));
+      } catch (error) {
+        console.log("Error: ", error);
+      } finally {
         setIsLoading(false);
       }
+
       window.scrollTo(0, 0);
     };
 
     fetchData();
   }, [categoryId, sortType, searchValue, currentPage]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isMounted.current) {
       //checking if there was a first render. If isMounted.current is false, don't place in query paramethers
       const queryString = qs.stringify(
@@ -88,7 +91,7 @@ export default function Home() {
 
   //Checking UTL parameters and saving in redux if there was a first render
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
       if (isNaN(params.currentPage)) {
