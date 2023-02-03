@@ -15,9 +15,8 @@ import {
   setCurrentPage,
   setFilters,
 } from "../redux/slices/filterSlice";
-import { setItems } from "../redux/slices/pizzasSlice";
+import { fetchPizzas } from "../redux/slices/pizzasSlice";
 
-import axios from "axios";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import { list } from "../components/Sort";
@@ -52,15 +51,8 @@ export default function Home() {
       const search = searchValue ? `&search=${searchValue}` : "";
       let url;
 
-      if (currentPage === undefined || isNaN(currentPage)) {
-        url = `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=1&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`;
-      } else {
-        url = `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`;
-      }
-
       try {
-        const { data } = await axios.get(url);
-        dispatch(setItems(data));
+        dispatch(fetchPizzas());
       } catch (error) {
         console.log("Error: ", error);
       } finally {
