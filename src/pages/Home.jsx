@@ -44,15 +44,15 @@ export default function Home() {
     dispatch(setCurrentPage(number)); //imported action above and dispatched it to store
   };
   useEffect(() => {
-    const fetchData = async () => {
+    const getPizzas = async () => {
       const category = categoryId > 0 ? `category=${categoryId}` : "";
       const sortBy = sortType.replace("-", "");
       const order = sortType.includes("-") ? "asc" : "desc";
       const search = searchValue ? `&search=${searchValue}` : "";
-      let url;
 
       try {
-        dispatch(fetchPizzas());
+        dispatch(fetchPizzas({ category, sortBy, currentPage, order, search }));
+        console.log("fetch", fetchPizzas());
       } catch (error) {
         console.log("Error: ", error);
       } finally {
@@ -61,8 +61,7 @@ export default function Home() {
 
       window.scrollTo(0, 0);
     };
-
-    fetchData();
+    getPizzas();
   }, [categoryId, sortType, searchValue, currentPage]);
 
   useEffect(() => {
