@@ -28,6 +28,12 @@ const pizzaSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchPizzas.pending, (state, action) => {
+      console.log("Pending request");
+    });
+    builder.addCase(fetchPizzas.rejected, (state, action) => {
+      console.log("Rejected");
+    });
     builder.addCase(fetchPizzas.fulfilled, (state, action) => {
       state.items = action.payload;
     });
