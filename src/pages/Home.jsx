@@ -25,14 +25,12 @@ export default function Home() {
   const { categoryId, sort, currentPage } = useSelector(
     (state) => state.filter
   ); //we don't need the whole state, just getting the part we want
-  const items = useSelector((state) => state.pizza.items);
+  const { items, status } = useSelector((state) => state.pizza);
   const sortType = sort.sortProperty;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
-
-  const [isLoading, setIsLoading] = useState(true);
 
   const { searchValue } = useContext(SearchContext);
 
@@ -52,11 +50,8 @@ export default function Home() {
 
       try {
         dispatch(fetchPizzas({ category, sortBy, currentPage, order, search }));
-        console.log("fetch", fetchPizzas());
       } catch (error) {
         console.log("Error: ", error);
-      } finally {
-        setIsLoading(false);
       }
 
       window.scrollTo(0, 0);
@@ -136,7 +131,17 @@ export default function Home() {
         <Sort />
       </div>
       <h2 className="content__title">All products</h2>
-      <div className="content__items">{isLoading ? skeletons : pizzas}</div>
+      {status === "error" ? (
+        <div className="content__error-info">
+          <h2>An error has occurred</h2>
+          <p>We could not fetch items. Please, try later. </p>
+        </div>
+      ) : (
+        <div className="content__items">
+          {status === "loading" ? skeletons : pizzas}
+        </div>
+      )}
+
       <Pagination onChangePage={onChangePage} currentPage={currentPage} />
     </div>
   );
