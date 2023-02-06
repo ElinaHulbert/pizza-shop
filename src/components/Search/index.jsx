@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./search.module.scss";
-import { SearchContext } from "../../App";
+import { setSearchValue } from "../../redux/slices/filterSlice";
+
 import debounce from "lodash.debounce";
+import { useDispatch } from "react-redux";
 
 // const testDebounce = debounce(() => {
 //   console.log("hiiii");
@@ -9,19 +11,19 @@ import debounce from "lodash.debounce";
 //placing this function global because there will be re-render caused in the search component and this variable will be recreated
 
 function Search() {
+  const dispatch = useDispatch();
   const [value, setValue] = React.useState("");
-  const { setSearchValue } = React.useContext(SearchContext);
   const inputRef = React.useRef();
 
   const onClickClear = () => {
-    setSearchValue("");
+    dispatch(setSearchValue(""));
     setValue("");
     inputRef.current.focus();
   };
 
   const updateSearchValue = React.useCallback(
     debounce((str) => {
-      setSearchValue(str);
+      dispatch(setSearchValue(str));
     }, 250),
     []
   );

@@ -2,6 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit"; //destructuring since there is no import default
 const initialState = {
   categoryId: 0,
+  searchValue: "",
   pageCount: 1,
   sort: {
     name: "popularity",
@@ -16,6 +17,9 @@ const filterSlice = createSlice({
     setCategoryId(state, action) {
       //can be created as an arrow function as well, but can be left as a method
       state.categoryId = action.payload; //we will get the payload when dispatch setCategoryId and redux will set the payload to state
+    },
+    setSearchValue(state, action) {
+      state.searchValue = action.payload;
     },
     setSort(state, action) {
       state.sort = action.payload;
@@ -33,5 +37,10 @@ const filterSlice = createSlice({
 
 export const selectFilterSort = (state) => state.filter.sort;
 export default filterSlice.reducer;
-export const { setCategoryId, setSort, setCurrentPage, setFilters } =
-  filterSlice.actions || {}; //get out actions for future dispatch
+export const {
+  setCategoryId,
+  setSort,
+  setCurrentPage,
+  setFilters,
+  setSearchValue,
+} = filterSlice.actions || {}; //get out actions for future dispatch

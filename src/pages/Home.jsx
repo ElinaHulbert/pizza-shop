@@ -1,13 +1,11 @@
 //Компания, где производят пирог. Компания принимает инструкции со склада и посылает ее на кухню.
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, { useEffect, useRef } from "react";
 
 import Pagination from "../pagination";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Categories from "../components/Categories";
 import Skeleton from "../components/PizzaBlock/Skeleton";
-
-import { SearchContext } from "../App";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -22,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { list } from "../components/Sort";
 
 export default function Home() {
-  const { categoryId, sort, currentPage } = useSelector(
+  const { categoryId, sort, currentPage, searchValue } = useSelector(
     (state) => state.filter
   ); //we don't need the whole state, just getting the part we want
   const { items, status } = useSelector((state) => state.pizza);
@@ -31,8 +29,6 @@ export default function Home() {
   const navigate = useNavigate();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
-
-  const { searchValue } = useContext(SearchContext);
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id)); //imported action above and dispatched it to store
