@@ -31,6 +31,7 @@ const filterSlice = createSlice({
   },
 }); //created action in filterSlice slice reducer and exported it below
 
+export const selectFilterSort = (state) => state.filter.sort;
 export default filterSlice.reducer;
 export const { setCategoryId, setSort, setCurrentPage, setFilters } =
   filterSlice.actions || {}; //get out actions for future dispatch
