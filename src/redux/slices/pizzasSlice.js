@@ -7,7 +7,7 @@ const initialState = {
 
 export const fetchPizzas = createAsyncThunk(
   "pizza/fetchPizzasStatus",
-  async (params) => {
+  async (params, thunkAPI) => {
     const { category, sortBy, currentPage, order, search } = params;
     let url;
     if (currentPage === undefined || isNaN(currentPage)) {
@@ -15,8 +15,12 @@ export const fetchPizzas = createAsyncThunk(
     } else {
       url = `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`;
     }
-    const response = await axios.get(url);
-    return response.data;
+    const { data } = await axios.get(url);
+    if (data.length === 0) {
+      return thunkAPI.rejectWithValue("Empty data");
+    }
+    console.log("thunkAPI", thunkAPI);
+    return thunkAPI.fulfillWithValue(data);
   }
 );
 
