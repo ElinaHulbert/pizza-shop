@@ -16,7 +16,7 @@ import {
 import { fetchPizzas } from "../redux/slices/pizzasSlice";
 
 import qs from "qs";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { list } from "../components/Sort";
 
 export default function Home() {
@@ -109,13 +109,15 @@ export default function Home() {
     // })
 
     .map((obj) => (
-      <PizzaBlock {...obj} key={obj.id} />
-      // spread operator, sending the whole object instead of this:
-      // title={obj.title}
-      // price={obj.price}
-      // imageUrl={obj.imageUrl}
-      // sizes={obj.sizes}
-      // types={obj.types}
+      <Link to={`/pizza/${obj.id}`} key={obj.id}>
+        <PizzaBlock {...obj} />
+        {/*// spread operator, sending the whole object instead of this: // title=
+        {obj.title}
+        // price={obj.price}
+        // imageUrl={obj.imageUrl}
+        // sizes={obj.sizes}
+        // types={obj.types}*/}
+      </Link>
     ));
   return (
     <div className="container">
