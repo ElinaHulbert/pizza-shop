@@ -1,9 +1,11 @@
 import React from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function FullPizza() {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   console.log("id", id);
   const [pizza, setPizza] = React.useState();
   React.useEffect(() => {
@@ -16,6 +18,7 @@ function FullPizza() {
         console.log(data);
       } catch (error) {
         console.log("Error when fetching individual pizza");
+        navigate("/");
       }
     }
     fetchPizza();
