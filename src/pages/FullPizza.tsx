@@ -6,8 +6,16 @@ function FullPizza() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  console.log("id", id);
-  const [pizza, setPizza] = React.useState();
+  const [pizza, setPizza] = React.useState<{
+    imageUrl: string;
+    title: string;
+    price: number;
+  }>({
+    imageUrl: "",
+    title: "",
+    price: 0,
+  });
+
   React.useEffect(() => {
     async function fetchPizza() {
       try {
@@ -25,7 +33,7 @@ function FullPizza() {
   }, []);
 
   if (!pizza) {
-    return "Loading...";
+    return <>"Loading..."</>;
   }
   return (
     <div className="container">
