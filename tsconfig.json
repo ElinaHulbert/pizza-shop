@@ -14,9 +14,10 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
-        "jsx": "react-jsx"
+        "jsx": "react-jsx",
+        "baseUrl": ".",
     },
     
-  "include": ["./src/**/*.ts"],
+  "include": ["./src/**/*.ts", "src/pages/FullPizza.tsx", "src/@types/custom.d.ts"], 
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
