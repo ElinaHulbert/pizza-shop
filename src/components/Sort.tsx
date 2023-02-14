@@ -2,7 +2,12 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSort, selectFilterSort } from "../redux/slices/filterSlice";
 
-export const list = [
+type SortItem = {
+  name: string;
+  sortProperty: string;
+}
+
+export const list: SortItem[] = [
   {
     name: "popularity(desc)",
     sortProperty: "rating",
@@ -19,9 +24,9 @@ function Sort() {
 
   const sort = useSelector(selectFilterSort);
   const [open, setOpen] = React.useState(false);
-  const sortRef = React.useRef();
+  const sortRef = React.useRef(null);
 
-  const onClickListItem = (obj) => {
+  const onClickListItem = (obj: SortItem) => {
     // onChangeSort(i);
     dispatch(setSort(obj));
     setOpen(false);
