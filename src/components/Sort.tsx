@@ -24,7 +24,7 @@ function Sort() {
 
   const sort = useSelector(selectFilterSort);
   const [open, setOpen] = React.useState(false);
-  const sortRef = React.useRef(null);
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
   const onClickListItem = (obj: SortItem) => {
     // onChangeSort(i);
@@ -33,7 +33,7 @@ function Sort() {
   };
 
   React.useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: any) => {
       if (!event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
