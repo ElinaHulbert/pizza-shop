@@ -1,14 +1,24 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, selectCartItemById } from "../../redux/slices/cartSlice";
-function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
+
+type PizzaBlockProps = {
+  id: string;
+  title: string;
+  types: number[];
+  sizes: number[];
+  price: number;
+  imageUrl: string;
+}
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, sizes, types }) => {
   // const [pizzaCount, setPizzaCount] = React.useState(0);
   // const onClickAdd = () => {
   //   setPizzaCount(pizzaCount + 1);
   // };
   // temporary counter, it will be done in redux later
-  const [activeType, setActiveType] = React.useState(0);
-  const [activeSize, setActiveSize] = React.useState(0);
+  const [activeType, setActiveType] = React.useState<number>(0);
+  const [activeSize, setActiveSize] = React.useState<number>(0);
   const typeNames = ["thin", "traditional"];
 
   const dispatch = useDispatch();
