@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 // }, 1000);
 //placing this function global because there will be re-render caused in the search component and this variable will be recreated
 
-function Search() {
+const Search: React.FC = () => {
   const dispatch = useDispatch();
   const [value, setValue] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -22,13 +22,13 @@ function Search() {
   };
 
   const updateSearchValue = React.useCallback(
-    debounce((str) => {
+    debounce((str: string) => {
       dispatch(setSearchValue(str));
     }, 250),
     []
   );
 
-  const onChangeInput = (event) => {
+  const onChangeInput = (event: any) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };
