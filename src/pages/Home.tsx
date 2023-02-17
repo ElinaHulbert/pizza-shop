@@ -19,7 +19,7 @@ import qs from "qs";
 import { useNavigate, Link } from "react-router-dom";
 import { list } from "../components/Sort";
 
-export default function Home() {
+const Home: React.FC = () => {
   const { categoryId, sort, currentPage, searchValue } = useSelector(
     (state) => state.filter
   ); //we don't need the whole state, just getting the part we want
@@ -30,12 +30,12 @@ export default function Home() {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const onChangeCategory = (id) => {
+  const onChangeCategory = (id: number) => {
     dispatch(setCategoryId(id)); //imported action above and dispatched it to store
   };
 
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number)); //imported action above and dispatched it to store
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page)); //imported action above and dispatched it to store
   };
   useEffect(() => {
     const getPizzas = async () => {
@@ -45,6 +45,7 @@ export default function Home() {
       const search = searchValue ? `&search=${searchValue}` : "";
 
       try {
+        // @ts-ignore
         dispatch(fetchPizzas({ category, sortBy, currentPage, order, search }));
       } catch (error) {
         console.log("Error: ", error);
@@ -83,7 +84,7 @@ export default function Home() {
         const currentPage = 1;
         dispatch(setFilters({ ...params, sort, currentPage }));
         isSearch.current = true; //parameters came from url
-      }
+      } 
     }
   }, []);
 
@@ -108,7 +109,7 @@ export default function Home() {
     //   return false;
     // })
 
-    .map((obj) => (
+    .map((obj: any) => (
       <Link to={`/pizza/${obj.id}`} key={obj.id}>
         <PizzaBlock {...obj} />
         {/*// spread operator, sending the whole object instead of this: // title=
@@ -143,4 +144,6 @@ export default function Home() {
       <Pagination onChangePage={onChangePage} currentPage={currentPage} />
     </div>
   );
-}
+};
+
+export default Home;
