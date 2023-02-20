@@ -77,7 +77,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
-      if (isNaN(params.currentPage)) {
+      if (!params?.currentPage) {
         const sort = list.find(
           (obj) => obj.sortProperty === params.sortProperty
         );
