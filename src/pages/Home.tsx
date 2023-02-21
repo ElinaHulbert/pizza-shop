@@ -76,15 +76,15 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
-      if (isNaN(params.currentPage)) {
+      let params = qs.parse(window.location.search.substring(1));
+      if (!params?.currentPage) {
         const sort = list.find(
           (obj) => obj.sortProperty === params.sortProperty
         );
         const currentPage = 1;
         dispatch(setFilters({ ...params, sort, currentPage }));
         isSearch.current = true; //parameters came from url
-      } 
+      }
     }
   }, []);
 
@@ -141,7 +141,7 @@ const Home: React.FC = () => {
         </div>
       )}
 
-      <Pagination onChangePage={onChangePage} currentPage={currentPage} />
+      <Pagination onChangePage={onChangePage} />
     </div>
   );
 };
