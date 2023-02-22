@@ -1,6 +1,19 @@
 //склад для производства кусочка пирога и его начинки вместе с инструкциями.
 import { createSlice } from "@reduxjs/toolkit"; //destructuring since there is no import default
-const initialState = {
+import { RootState } from "../store";
+type Sort ={
+  name: string,
+  sortProperty: "rating",
+}
+
+interface FilterSliceState {
+  categoryId: number,
+  searchValue: string,
+  pageCount: number,
+  sort: Sort,
+}
+
+const initialState: FilterSliceState = {
   categoryId: 0,
   searchValue: "",
   pageCount: 1,
@@ -35,7 +48,7 @@ const filterSlice = createSlice({
   },
 }); //created action in filterSlice slice reducer and exported it below
 
-export const selectFilterSort = (state) => state.filter.sort;
+export const selectFilterSort = (state: RootState) => state.filter.sort;
 export default filterSlice.reducer;
 export const {
   setCategoryId,
