@@ -18,12 +18,13 @@ import { fetchPizzas } from "../redux/slices/pizzasSlice";
 import qs from "qs";
 import { useNavigate, Link } from "react-router-dom";
 import { list } from "../components/Sort";
+import { RootState } from "../redux/store";
 
 const Home: React.FC = () => {
   const { categoryId, sort, currentPage, searchValue } = useSelector(
-    (state) => state.filter
+    (state: RootState) => state.filter
   ); //we don't need the whole state, just getting the part we want
-  const { items, status } = useSelector((state) => state.pizza);
+  const { items, status } = useSelector((state: RootState) => state.pizza);
   const sortType = sort.sortProperty;
   const dispatch = useDispatch();
   const navigate = useNavigate();

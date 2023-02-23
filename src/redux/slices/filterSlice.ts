@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"; //destructuring since there is n
 import { RootState } from "../store";
 type Sort ={
   name: string,
-  sortProperty: "rating",
+  sortProperty: "rating" | "title" | "price" | "-rating" | "-title" | "-price",
 }
 
 interface FilterSliceState {
