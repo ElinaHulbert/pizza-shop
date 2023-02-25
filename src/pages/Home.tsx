@@ -78,7 +78,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (window.location.search) {
       let params = qs.parse(window.location.search.substring(1));
-      if (!params?.currentPage) {
+      if (params.currentPage !== undefined) {
         const sort = list.find(
           (obj) => obj.sortProperty === params.sortProperty
         );

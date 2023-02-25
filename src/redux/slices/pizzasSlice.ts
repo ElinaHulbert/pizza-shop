@@ -7,6 +7,7 @@ type PizzaItem = {
   sizes: number[];
   price: number;
   imageUrl: string;
+  rating: number,
 }
 interface PizzaSliceState {
   items: PizzaItem[];
@@ -23,7 +24,7 @@ export const fetchPizzas = createAsyncThunk(
   async (params: Record<string, string>, thunkAPI) => {
     const { category, sortBy, currentPage, order, search } = params;
     let url;
-    if (currentPage === undefined || isNaN(currentPage)) {
+    if (currentPage) {
       url = `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=1&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`;
     } else {
       url = `https://62f0eef1e2bca93cd240319f.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`;

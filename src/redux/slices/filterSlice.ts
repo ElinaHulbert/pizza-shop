@@ -1,9 +1,9 @@
 //склад для производства кусочка пирога и его начинки вместе с инструкциями.
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"; //destructuring since there is no import default
 import { RootState } from "../store";
-type Sort ={
+type Sort = {
   name: string,
-  sortProperty: "rating" | "title" | "price" | "-rating" | "-title" | "-price",
+  sortProperty: string,
 }
 
 interface FilterSliceState {
