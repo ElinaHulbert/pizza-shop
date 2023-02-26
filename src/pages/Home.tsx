@@ -19,7 +19,7 @@ import {
 import { fetchPizzas } from "../redux/slices/pizzasSlice";
 
 import qs from "qs";
-import { useNavigate,  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { list } from "../components/Sort";
 import { RootState } from "../redux/store";
 
@@ -38,7 +38,7 @@ const Home: React.FC = () => {
     dispatch(setCategoryId(id)); //imported action above and dispatched it to store
   };
 
-  const onChangePage = (page: number) => {
+  const onChangePage = (page: string) => {
     dispatch(setCurrentPage(page)); //imported action above and dispatched it to store
   };
   useEffect(() => {
@@ -49,7 +49,7 @@ const Home: React.FC = () => {
       const search = searchValue ? `&search=${searchValue}` : "";
 
       try {
-        // @ts-ignore
+        
         dispatch(fetchPizzas({ category, sortBy, currentPage, order, search }));
       } catch (error) {
         console.log("Error: ", error);
@@ -85,11 +85,11 @@ const Home: React.FC = () => {
         const sort = list.find(
           (obj) => obj.sortProperty === params.sortBy
         );
-        const currentPage = 1;
+        const currentPage = "1";
         dispatch(setFilters({ 
           searchValue: params.search,
           categoryId: Number(params.category),
-          currentPage: Number(currentPage),
+          currentPage: currentPage,
           sort: sort || list[0],
         }));
         isSearch.current = true; //parameters came from url

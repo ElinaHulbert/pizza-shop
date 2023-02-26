@@ -18,14 +18,14 @@ export enum SortPropertyEnum {
 export interface FilterSliceState {
   searchValue: string;
   categoryId: number;
-  currentPage: number;
+  currentPage: string;
   sort: Sort;
 }
 
 const initialState: FilterSliceState = {
   categoryId: 0,
   searchValue: "",
-  currentPage: 1,
+  currentPage: "1",
   sort: {
     name: "popularity",
     sortProperty: SortPropertyEnum.PRICE_DESC,
@@ -46,11 +46,11 @@ const filterSlice = createSlice({
     setSort(state, action: PayloadAction<Sort>) {
       state.sort = action.payload;
     },
-    setCurrentPage(state, action: PayloadAction<number>) {
+    setCurrentPage(state, action: PayloadAction<string>) {
       state.currentPage = action.payload;
     },
     setFilters(state, action: PayloadAction<FilterSliceState>) {
-      state.currentPage = Number(action.payload.currentPage);
+      state.currentPage = action.payload.currentPage;
       state.sort = action.payload.sort;
       state.categoryId = Number(action.payload.categoryId);
     },
