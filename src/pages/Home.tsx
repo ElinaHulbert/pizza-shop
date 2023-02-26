@@ -19,7 +19,7 @@ import {
 import { fetchPizzas } from "../redux/slices/pizzasSlice";
 
 import qs from "qs";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate,  } from "react-router-dom";
 import { list } from "../components/Sort";
 import { RootState } from "../redux/store";
 
@@ -119,15 +119,15 @@ const Home: React.FC = () => {
     // })
 
     .map((obj: any) => (
-      <Link to={`/pizza/${obj.id}`} key={obj.id}>
+      
         <PizzaBlock {...obj} />
-        {/*// spread operator, sending the whole object instead of this: // title=
+        /*// spread operator, sending the whole object instead of this: // title=
         {obj.title}
         // price={obj.price}
         // imageUrl={obj.imageUrl}
         // sizes={obj.sizes}
-        // types={obj.types}*/}
-      </Link>
+        // types={obj.types}*/
+      
     ));
   return (
     <div className="container">
