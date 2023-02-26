@@ -1,16 +1,25 @@
 //склад для производства кусочка пирога и его начинки вместе с инструкциями.
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"; //destructuring since there is no import default
 import { RootState } from "../store";
-type Sort = {
+export type Sort = {
   name: string,
-  sortProperty: string,
+  sortProperty: SortPropertyEnum,
 }
 
-interface FilterSliceState {
-  categoryId: number,
-  searchValue: string,
-  currentPage: number,
-  sort: Sort,
+export enum SortPropertyEnum {
+  RATING_DESC = "rating",
+  RATING_ASC = "-rating",
+  TITLE_DESC = "title",
+  TITLE_ASC = "-title",
+  PRICE_DESC = "price",
+  PRICE_ASC = "-price"
+}
+
+export interface FilterSliceState {
+  searchValue: string;
+  categoryId: number;
+  currentPage: number;
+  sort: Sort;
 }
 
 const initialState: FilterSliceState = {
@@ -19,7 +28,7 @@ const initialState: FilterSliceState = {
   currentPage: 1,
   sort: {
     name: "popularity",
-    sortProperty: "rating",
+    sortProperty: SortPropertyEnum.PRICE_DESC,
   },
 };
 

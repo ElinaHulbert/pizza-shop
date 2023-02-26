@@ -7,7 +7,10 @@ import PizzaBlock from "../components/PizzaBlock";
 import Categories from "../components/Categories";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../redux/store";
+import { SearchPizzaParams } from "../redux/slices/pizzasSlice";
+
 import {
   setCategoryId,
   setCurrentPage,
@@ -26,7 +29,7 @@ const Home: React.FC = () => {
   ); //we don't need the whole state, just getting the part we want
   const { items, status } = useSelector((state: RootState) => state.pizza);
   const sortType = sort.sortProperty;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
@@ -77,13 +80,18 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (window.location.search) {
-      let params = qs.parse(window.location.search.substring(1));
+      let params = (qs.parse(window.location.search.substring(1)) as unknown) as SearchPizzaParams;
       if (params.currentPage !== undefined) {
         const sort = list.find(
-          (obj) => obj.sortProperty === params.sortProperty
+          (obj) => obj.sortProperty === params.sortBy
         );
         const currentPage = 1;
-        dispatch(setFilters({ ...params, sort, currentPage }));
+        dispatch(setFilters({ 
+          searchValue: params.search,
+          categoryId: Number(params.category),
+          currentPage: Number(currentPage),
+          sort: sort || list[0],
+        }));
         isSearch.current = true; //parameters came from url
       }
     }
