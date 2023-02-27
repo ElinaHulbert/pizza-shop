@@ -7,7 +7,10 @@ import PizzaBlock from "../components/PizzaBlock";
 import Categories from "../components/Categories";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../redux/store";
+import { SearchPizzaParams } from "../redux/slices/pizzasSlice";
+
 import {
   setCategoryId,
   setCurrentPage,
@@ -16,16 +19,17 @@ import {
 import { fetchPizzas } from "../redux/slices/pizzasSlice";
 
 import qs from "qs";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { list } from "../components/Sort";
+import { RootState } from "../redux/store";
 
 const Home: React.FC = () => {
   const { categoryId, sort, currentPage, searchValue } = useSelector(
-    (state) => state.filter
+    (state: RootState) => state.filter
   ); //we don't need the whole state, just getting the part we want
-  const { items, status } = useSelector((state) => state.pizza);
+  const { items, status } = useSelector((state: RootState) => state.pizza);
   const sortType = sort.sortProperty;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
@@ -34,7 +38,7 @@ const Home: React.FC = () => {
     dispatch(setCategoryId(id)); //imported action above and dispatched it to store
   };
 
-  const onChangePage = (page: number) => {
+  const onChangePage = (page: string) => {
     dispatch(setCurrentPage(page)); //imported action above and dispatched it to store
   };
   useEffect(() => {
@@ -45,7 +49,7 @@ const Home: React.FC = () => {
       const search = searchValue ? `&search=${searchValue}` : "";
 
       try {
-        // @ts-ignore
+        
         dispatch(fetchPizzas({ category, sortBy, currentPage, order, search }));
       } catch (error) {
         console.log("Error: ", error);
@@ -76,15 +80,20 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
-      if (!params?.currentPage) {
+      let params = (qs.parse(window.location.search.substring(1)) as unknown) as SearchPizzaParams;
+      if (params.currentPage !== undefined) {
         const sort = list.find(
-          (obj) => obj.sortProperty === params.sortProperty
+          (obj) => obj.sortProperty === params.sortBy
         );
-        const currentPage = 1;
-        dispatch(setFilters({ ...params, sort, currentPage }));
+        const currentPage = "1";
+        dispatch(setFilters({ 
+          searchValue: params.search,
+          categoryId: Number(params.category),
+          currentPage: currentPage,
+          sort: sort || list[0],
+        }));
         isSearch.current = true; //parameters came from url
-      } 
+      }
     }
   }, []);
 
@@ -110,15 +119,15 @@ const Home: React.FC = () => {
     // })
 
     .map((obj: any) => (
-      <Link to={`/pizza/${obj.id}`} key={obj.id}>
+      
         <PizzaBlock {...obj} />
-        {/*// spread operator, sending the whole object instead of this: // title=
+        /*// spread operator, sending the whole object instead of this: // title=
         {obj.title}
         // price={obj.price}
         // imageUrl={obj.imageUrl}
         // sizes={obj.sizes}
-        // types={obj.types}*/}
-      </Link>
+        // types={obj.types}*/
+      
     ));
   return (
     <div className="container">
@@ -141,7 +150,7 @@ const Home: React.FC = () => {
         </div>
       )}
 
-      <Pagination onChangePage={onChangePage} currentPage={currentPage} />
+      <Pagination onChangePage={onChangePage} />
     </div>
   );
 };
