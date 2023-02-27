@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSort, selectFilterSort } from "../redux/slices/filterSlice";
 import { SortPropertyEnum } from "../redux/slices/filterSlice";
+import { Sort } from "../redux/slices/filterSlice";
 
 type SortItem = {
   name: string;
@@ -12,6 +13,9 @@ type SortItem = {
 //   composedPath: Node[];
 // }
 
+type SortPopupProps = {
+  value: Sort
+}
 
 export const list: SortItem[] = [
   {
@@ -25,7 +29,7 @@ export const list: SortItem[] = [
   { name: "Z-A", sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
-function SortPopup() {
+const SortPopup:  React.FC<SortPopupProps> = React.memo(({value}) => {
   const dispatch = useDispatch();
 
   const sort = useSelector(selectFilterSort);
@@ -65,7 +69,7 @@ function SortPopup() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open)}>{sort.name}</span>
+        <span onClick={() => setOpen(!open)}>{value.name}</span>
       </div>
       {open && (
         <div className="sort__popup">
@@ -75,7 +79,7 @@ function SortPopup() {
                 key={i}
                 onClick={() => onClickListItem(list)}
                 className={
-                  sort.sortProperty === list.sortProperty ? "active" : ""
+                  value.sortProperty === list.sortProperty ? "active" : ""
                 } //we compare something that parent has to something that is rendering right now in the list
               >
                 {list.name}
@@ -86,6 +90,6 @@ function SortPopup() {
       )}
     </div>
   );
-}
+})
 
 export default SortPopup;

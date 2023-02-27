@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { list } from "../components/Sort";
 import { RootState } from "../redux/store";
 
+
 const Home: React.FC = () => {
   const { categoryId, sort, currentPage, searchValue } = useSelector(
     (state: RootState) => state.filter
@@ -34,9 +35,9 @@ const Home: React.FC = () => {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const onChangeCategory = (id: number) => {
+  const onChangeCategory = React.useCallback((id: number) => {
     dispatch(setCategoryId(id)); //imported action above and dispatched it to store
-  };
+  }, [])
 
   const onChangePage = (page: string) => {
     dispatch(setCurrentPage(page)); //imported action above and dispatched it to store
@@ -120,7 +121,7 @@ const Home: React.FC = () => {
 
     .map((obj: any) => (
       
-        <PizzaBlock {...obj} />
+        <PizzaBlock key={obj.id} {...obj} />
         /*// spread operator, sending the whole object instead of this: // title=
         {obj.title}
         // price={obj.price}
@@ -136,7 +137,7 @@ const Home: React.FC = () => {
           categoryId={categoryId}
           onChangeCategory={onChangeCategory}
         />
-        <Sort />
+        <Sort value={sort} />
       </div>
       <h2 className="content__title">All products</h2>
       {status === "error" ? (

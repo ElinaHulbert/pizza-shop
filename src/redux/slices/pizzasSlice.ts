@@ -44,7 +44,7 @@ export const fetchPizzas = createAsyncThunk(
     if (data.length === 0) {
       return thunkAPI.rejectWithValue("Empty data");
     }
-    console.log("thunkAPI", thunkAPI);
+    // console.log("thunkAPI", thunkAPI);
     return thunkAPI.fulfillWithValue(data);
   }
 );
