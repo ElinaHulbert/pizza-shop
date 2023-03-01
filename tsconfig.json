@@ -19,6 +19,6 @@
         "plugins": [{ "name": "typescript-plugin-css-modules" }]
     },
     
-  "include": ["./src/**/*.ts", "src/pages/FullPizza.tsx","src/components/*","src/pagination/*", "@types/custom.d.ts"], 
+  "include": ["./src/**/*.ts", "src/pages/FullPizza.tsx","src/components/*","src/pagination/*", "@types/custom.d.ts", "./src/utils/*"], 
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
