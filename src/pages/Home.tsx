@@ -9,14 +9,10 @@ import Skeleton from "../components/PizzaBlock/Skeleton";
 
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../redux/store";
-import { SearchPizzaParams } from "../redux/slices/pizzasSlice";
+import { SearchPizzaParams } from '../redux/pizza/types';
 
-import {
-  setCategoryId,
-  setCurrentPage,
-  setFilters,
-} from "../redux/slices/filterSlice";
-import { fetchPizzas } from "../redux/slices/pizzasSlice";
+import { setCategoryId, setCurrentPage, setFilters } from '../redux/filter/slice';
+import { fetchPizzas } from '../redux/pizza/asyncActions';
 
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
