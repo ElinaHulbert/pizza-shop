@@ -15,7 +15,7 @@ type PizzaBlockProps = {
   imageUrl: string;
 }
 
-const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, sizes, types }) => {
+export const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, sizes, types }) => {
   // const [pizzaCount, setPizzaCount] = React.useState(0);
   // const onClickAdd = () => {
   //   setPizzaCount(pizzaCount + 1);
@@ -102,4 +102,3 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, siz
     </div>
   );
 }
-export default PizzaBlock;

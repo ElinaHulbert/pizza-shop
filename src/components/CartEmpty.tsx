@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 // const cartEmptyImg = require("./logo.svg") as string;
 
-const CartEmpty: React.FC = () => (
+export const CartEmpty: React.FC = () => (
   <div className="cart cart--empty">
     <h2>
       Your cart is empty <span>😕</span>
@@ -21,4 +21,3 @@ const CartEmpty: React.FC = () => (
   </div>
 );
 
-export default CartEmpty;

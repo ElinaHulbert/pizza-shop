@@ -16,7 +16,7 @@ const categories = [
   "Закрытые",
 ];
 
-const Categories: React.FC<CategoriesProps> = React.memo(({ categoryId, onChangeCategory }) => {
+export const Categories: React.FC<CategoriesProps> = React.memo(({ categoryId, onChangeCategory }) => {
   // useWhyDidYouUpdate("Categories", { categoryId, onChangeCategory })
   return (
     <div className="categories">
@@ -35,4 +35,3 @@ const Categories: React.FC<CategoriesProps> = React.memo(({ categoryId, onChange
   );
 })
 
-export default Categories;

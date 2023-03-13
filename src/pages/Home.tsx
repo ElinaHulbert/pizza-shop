@@ -1,19 +1,14 @@
 //Компания, где производят пирог. Компания принимает инструкции со склада и посылает ее на кухню.
 import React, { useEffect, useRef } from "react";
 
-import Pagination from "../pagination";
-import Sort from "../components/Sort";
-import PizzaBlock from "../components/PizzaBlock";
-import Categories from "../components/Categories";
-import Skeleton from "../components/PizzaBlock/Skeleton";
-
+import {Pagination} from "../pagination";
+import {Skeleton, PizzaBlock, Categories, Sort, } from "../components"
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../redux/store";
 import { SearchPizzaParams } from '../redux/pizza/types';
 
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/filter/slice';
 import { fetchPizzas } from '../redux/pizza/asyncActions';
-
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import { list } from "../components/Sort";
