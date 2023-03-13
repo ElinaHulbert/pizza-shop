@@ -11,7 +11,7 @@ export type PizzaItem = {
 export type SearchPizzaParams = {
   category: string;
   sortBy: string;
-  currentPage: string;
+  currentPage: number;
   order: string;
   search: string;
 };

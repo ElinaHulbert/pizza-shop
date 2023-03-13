@@ -5,7 +5,7 @@ import { FilterSliceState, Sort, SortPropertyEnum } from './types';
 const initialState: FilterSliceState = {
   categoryId: 0,
   searchValue: "",
-  currentPage: "1",
+  currentPage: 1,
   sort: {
     name: "popularity",
     sortProperty: SortPropertyEnum.PRICE_DESC,
@@ -26,7 +26,7 @@ const filterSlice = createSlice({
     setSort(state, action: PayloadAction<Sort>) {
       state.sort = action.payload;
     },
-    setCurrentPage(state, action: PayloadAction<string>) {
+    setCurrentPage(state, action: PayloadAction<number>) {
       state.currentPage = action.payload;
     },
     setFilters(state, action: PayloadAction<FilterSliceState>) {

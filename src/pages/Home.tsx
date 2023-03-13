@@ -30,7 +30,7 @@ const Home: React.FC = () => {
     dispatch(setCategoryId(id)); //imported action above and dispatched it to store
   }, [])
 
-  const onChangePage = (page: string) => {
+  const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page)); //imported action above and dispatched it to store
   };
   useEffect(() => {
@@ -77,7 +77,7 @@ const Home: React.FC = () => {
         const sort = list.find(
           (obj) => obj.sortProperty === params.sortBy
         );
-        const currentPage = "1";
+        const currentPage = 1;
         dispatch(setFilters({ 
           searchValue: params.search,
           categoryId: Number(params.category),
