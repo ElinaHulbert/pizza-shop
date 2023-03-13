@@ -5,13 +5,11 @@ import {Pagination} from "../pagination";
 import {Skeleton, PizzaBlock, Categories, Sort, } from "../components"
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../redux/store";
-import { SearchPizzaParams } from '../redux/pizza/types';
 
-import { setCategoryId, setCurrentPage, setFilters } from '../redux/filter/slice';
+import { setCategoryId, setCurrentPage,  } from '../redux/filter/slice';
 import { fetchPizzas } from '../redux/pizza/asyncActions';
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
-import { list } from "../components/Sort";
 import { RootState } from "../redux/store";
 
 
@@ -23,12 +21,12 @@ const Home: React.FC = () => {
   const sortType = sort.sortProperty;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const isSearch = useRef(false);
   const isMounted = useRef(false);
 
   const onChangeCategory = React.useCallback((id: number) => {
     dispatch(setCategoryId(id)); //imported action above and dispatched it to store
-  }, [])
+    console.log(id)
+  }, [dispatch])
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page)); //imported action above and dispatched it to store
@@ -43,6 +41,7 @@ const Home: React.FC = () => {
       try {
         
         dispatch(fetchPizzas({ category, sortBy, currentPage, order, search }));
+        console.log("mycat", category)
       } catch (error) {
         console.log("Error: ", error);
       }
@@ -50,7 +49,7 @@ const Home: React.FC = () => {
       window.scrollTo(0, 0);
     };
     getPizzas();
-  }, [categoryId, sortType, searchValue, currentPage]);
+  }, [categoryId, sortType, searchValue, currentPage, dispatch]);
 
   useEffect(() => {
     if (isMounted.current) {
@@ -66,28 +65,11 @@ const Home: React.FC = () => {
       navigate(`${queryString}`);
     }
     isMounted.current = true;
-  }, [categoryId, sortType, currentPage]);
+  }, [categoryId, sortType, currentPage, navigate, sort.sortProperty]);
 
   //Checking UTL parameters and saving in redux if there was a first render
 
-  useEffect(() => {
-    if (window.location.search) {
-      let params = (qs.parse(window.location.search.substring(1)) as unknown) as SearchPizzaParams;
-      if (params.currentPage !== undefined) {
-        const sort = list.find(
-          (obj) => obj.sortProperty === params.sortBy
-        );
-        const currentPage = 1;
-        dispatch(setFilters({ 
-          searchValue: params.search,
-          categoryId: Number(params.category),
-          currentPage: currentPage,
-          sort: sort || list[0],
-        }));
-        isSearch.current = true; //parameters came from url
-      }
-    }
-  }, []);
+
 
   //Fetch pizzas if there was a first render
 

@@ -14,7 +14,7 @@ export enum SortPropertyEnum {
 
 export interface FilterSliceState {
   searchValue: string;
-  categoryId: number;
+  categoryId: number | string;
   currentPage: number;
   sort: Sort;
 }

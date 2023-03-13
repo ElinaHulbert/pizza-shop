@@ -31,7 +31,7 @@ function FullPizza() {
       }
     }
     fetchPizza();
-  }, []);
+  }, [id, navigate]);
 
   if (!pizza) {
     return <>"Loading..."</>;
