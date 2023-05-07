@@ -1,11 +1,10 @@
-import { calcTotalPrice } from '../../utils/calcTotalPrice';
-import { getCartFromLocalstorage } from '../../utils/getCartFromLocalstorage';
+import { calcTotalPrice } from "../../utils/calcTotalPrice";
+import { getCartFromLocalstorage } from "../../utils/getCartFromLocalstorage";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { CartSliceState } from './types';
-import { CartItem} from './types';
+import { CartSliceState } from "./types";
+import { CartItem } from "./types";
 
- 
 const initialState: CartSliceState = getCartFromLocalstorage();
 
 const cartSlice = createSlice({
@@ -19,7 +18,7 @@ const cartSlice = createSlice({
       } else {
         state.items.push({ ...action.payload, count: 1 }); //taking everything we are getting from the component and adding only one item to store at the end
       }
-      state.totalPrice = calcTotalPrice(state.items)
+      state.totalPrice = calcTotalPrice(state.items);
     },
 
     minusItem(state, action: PayloadAction<string>) {
@@ -27,18 +26,18 @@ const cartSlice = createSlice({
       if (findItem) {
         findItem.count--;
       }
-      state.totalPrice = calcTotalPrice(state.items)
+      state.totalPrice = calcTotalPrice(state.items);
     },
     removeItem(state, action: PayloadAction<string>) {
       state.items = state.items.filter((obj) => obj.id !== action.payload);
+      state.totalPrice = calcTotalPrice(state.items);
     },
     clearItems(state) {
       state.items = [];
-      state.totalPrice = 0;
+      state.totalPrice = calcTotalPrice(state.items);
     },
   },
 });
-
 
 export default cartSlice.reducer;
 export const { addItem, removeItem, minusItem, clearItems } =
