@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { addItem, minusItem, removeItem } from "../../redux/cart/slice";
-import { CartItem as CartItemType } from "../../redux/cart/types";
+import { CartItem as CartItemType, ItemIdentifier } from "../../redux/cart/types";
 import clsx from "clsx";
 
 type CartItemProps = {
@@ -32,8 +32,8 @@ export const CartItem: React.FC<CartItemProps> = ({
       imageUrl,
       type,
       size,
-      totalPrice: 0,
       count: 0,
+      totalPrice: 0,
     };
     dispatch(addItem(item));
   };
@@ -53,18 +53,13 @@ export const CartItem: React.FC<CartItemProps> = ({
   };
 
   const onClickRemove = () => {
-    const item: CartItemType = {
+    const itemToRemove: ItemIdentifier = {
       id,
-      title,
-      price,
-      imageUrl,
       type,
       size,
-      totalPrice: 0,
-      count: 0,
     };
     if (window.confirm("Are you sure you want to remove?")) {
-      dispatch(removeItem(item));
+      dispatch(removeItem(itemToRemove));
     }
   };
   return (

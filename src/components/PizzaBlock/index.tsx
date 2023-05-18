@@ -27,7 +27,6 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageU
 
   const dispatch = useDispatch();
   const cartItem = useSelector(selectCartItemById(id));
-  const addedCount = cartItem ? cartItem.count : 0;
 
   const onClickAdd = () => {
     const item: CartItem = {
@@ -96,7 +95,7 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageU
             />
           </svg>
           <span>Add</span>
-          {addedCount > 0 && <i>{addedCount}</i>}
+          
         </button>
       </div>
     </div>

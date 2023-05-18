@@ -13,3 +13,9 @@ export type CartItem={
     totalPrice: number;
     items: CartItem[]
   }
+
+ export interface ItemIdentifier {
+    id: string;
+    type: string;
+    size: number;
+  }
