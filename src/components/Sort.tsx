@@ -50,7 +50,7 @@ export const Sort:  React.FC<SortPopupProps> = React.memo(({value}) => {
   }, []);
 
   return (
-    <div className="sort" ref={sortRef}>
+    <div  className="font-kaftan md:font-serif" ref={sortRef}>
       <div className="sort__label">
         <svg
           width="10"
