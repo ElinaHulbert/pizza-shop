@@ -1,17 +1,17 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setSort } from '../redux/filter/slice';
-import { Sort as SortType, SortPropertyEnum } from '../redux/filter/types';
+import { setSort } from "../redux/filter/slice";
+import { Sort as SortType, SortPropertyEnum } from "../redux/filter/types";
 import { selectFilterSort } from "src/redux/filter/selectors";
 
 type SortItem = {
   name: string;
   sortProperty: SortPropertyEnum;
-}
+};
 
 type SortPopupProps = {
-  value: SortType
-}
+  value: SortType;
+};
 
 export const list: SortItem[] = [
   {
@@ -25,7 +25,7 @@ export const list: SortItem[] = [
   { name: "Z-A", sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
-export const Sort:  React.FC<SortPopupProps> = React.memo(({value}) => {
+export const Sort: React.FC<SortPopupProps> = React.memo(({ value }) => {
   const dispatch = useDispatch();
 
   const sort = useSelector(selectFilterSort);
@@ -50,13 +50,14 @@ export const Sort:  React.FC<SortPopupProps> = React.memo(({value}) => {
   }, []);
 
   return (
-    <div className="sort" ref={sortRef}>
+    <div  className="font-kaftan md:font-serif" ref={sortRef}>
       <div className="sort__label">
         <svg
           width="10"
           height="6"
           viewBox="0 0 10 6"
           fill="none"
+          className={open ? "active" : ""}
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -86,4 +87,4 @@ export const Sort:  React.FC<SortPopupProps> = React.memo(({value}) => {
       )}
     </div>
   );
-})
+});

@@ -20,13 +20,13 @@ export const Header: React.FC = () => {
   }, [items])
   return (
     <div className="header">
-      <div className="container">
+      <div className="border-black">
         <Link to="/">
           <div className="header__logo">
             <img width="38" src={logoSvg} alt="Pizza logo" />
-            <div>
-              <h1>React Pizza</h1>
-              <p>the best pizza</p>
+            <div className="inline max-w-[200px]">
+              <h1 className="font-Kaftan text-main.beige w-52 mr-0" >My way is coffee</h1>
+              {/* <p className="font-main md:font-serif">the best pizza</p> */}
             </div>
           </div>
         </Link>

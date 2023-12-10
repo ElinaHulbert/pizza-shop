@@ -1,11 +1,10 @@
-import { calcTotalPrice } from '../../utils/calcTotalPrice';
-import { getCartFromLocalstorage } from '../../utils/getCartFromLocalstorage';
+import { calcTotalPrice, minusTotalPrice } from "../../utils/calcTotalPrice";
+import { getCartFromLocalstorage } from "../../utils/getCartFromLocalstorage";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { CartSliceState } from './types';
-import { CartItem} from './types';
+import { CartSliceState } from "./types";
+import { CartItem, ItemIdentifier } from "./types";
 
- 
 const initialState: CartSliceState = getCartFromLocalstorage();
 
 const cartSlice = createSlice({
@@ -13,31 +12,47 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem(state, action: PayloadAction<CartItem>) {
-      const findItem = state.items.find((obj) => obj.id === action.payload.id);
-      if (findItem) {
-        findItem.count++;
+      const existingItem = state.items.find(
+        (item) =>
+          item.id === action.payload.id &&
+          item.type === action.payload.type &&
+          item.size === action.payload.size
+      );
+    
+      if (existingItem) {
+        existingItem.count++;
       } else {
-        state.items.push({ ...action.payload, count: 1 }); //taking everything we are getting from the component and adding only one item to store at the end
+        state.items.push({ ...action.payload, count: 1 });
       }
-      state.totalPrice = calcTotalPrice(state.items)
+      state.totalPrice = calcTotalPrice(state.items);
     },
 
-    minusItem(state, action: PayloadAction<string>) {
-      const findItem = state.items.find((obj) => obj.id === action.payload);
+    minusItem(state, action: PayloadAction<CartItem>) {
+      const findItem = state.items.find(
+        (obj) =>
+          obj.id === action.payload.id &&
+          obj.type === action.payload.type &&
+          obj.size === action.payload.size
+      );
       if (findItem) {
         findItem.count--;
       }
+      state.totalPrice = calcTotalPrice(state.items);
     },
-    removeItem(state, action: PayloadAction<string>) {
-      state.items = state.items.filter((obj) => obj.id !== action.payload);
+    removeItem(state, action: PayloadAction<ItemIdentifier>) {
+      state.items = state.items.filter((obj) =>
+        obj.id !== action.payload.id ||
+        obj.type !== action.payload.type ||
+        obj.size !== action.payload.size
+      );
+      state.totalPrice = calcTotalPrice(state.items);
     },
     clearItems(state) {
       state.items = [];
-      state.totalPrice = 0;
+      state.totalPrice = calcTotalPrice(state.items);
     },
   },
 });
-
 
 export default cartSlice.reducer;
 export const { addItem, removeItem, minusItem, clearItems } =
