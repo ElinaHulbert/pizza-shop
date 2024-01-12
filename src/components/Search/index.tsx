@@ -33,7 +33,7 @@ export const Search: React.FC = () => {
     updateSearchValue(event.target.value);
   };
   return (
-    <div className="w-[452px] h-[50px] bg-orange-100 rounded-[25px]">
+    <div className={styles.root}>
       <svg
         className={styles.icon}
         enableBackground="new 0 0 32 32"
@@ -72,7 +72,7 @@ export const Search: React.FC = () => {
         ref={inputRef}
         value={value} //React advises to keep the changed value in input. Due to this, we can clear input "controlled input"
         onChange={onChangeInput}
-        className="w-[452px] h-[50px] bg-orange-100 rounded-[25px]"
+        className={styles.input}
         placeholder="Search"
       />
       {value && (

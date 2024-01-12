@@ -1,48 +1,35 @@
-.root {
+.root{
   position: relative;
 }
-.input {
+.input{
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 12px 20px;
   padding-left: 42px;
-  width: 350px;
+  width: 400px;
   border-radius: 10px;
   font-size: 16px;
-  margin-right: 20px;
 
-  &:focus {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-  }
-  @media (max-width: 1024px) {
-    margin-bottom: 20px;
-    margin-right: 0;
-    width: 400px;
-  }
-  @media (max-width: 645px) {
-    width: 300px;
-  }
-  @media (max-width: 380px) {
-    width: 280px;
+  &:focus{
+      border: 1px solid rgba(0, 0, 0, 0.2);
   }
 }
-.icon {
+.icon{
   width: 22px;
   height: 24px;
-  opacity: 0.3;
+  opacity: .3;
   position: absolute;
   left: 14px;
   top: 12px;
-  margin-right: 20px;
 }
-.clear_icon {
+.clear_icon{
   width: 18px;
   height: 18px;
-  opacity: 0.3;
+  opacity: .3;
   position: absolute;
   right: 15px;
   top: 15px;
-  &:hover {
-    opacity: 0.8;
-    cursor: pointer;
+  &:hover{
+      opacity: .8;
+      cursor: pointer;
   }
 }
